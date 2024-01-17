@@ -1,6 +1,6 @@
 import '@mantine/core/styles.css';
 import './App.css'
-import { AppShell, Burger, Flex, Group, Image, Title } from '@mantine/core';
+import { AppShell, Burger, Group, Image, Title } from '@mantine/core';
 import { useDisclosure } from '@mantine/hooks';
 
 function App() {
