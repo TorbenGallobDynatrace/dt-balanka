@@ -1,10 +1,11 @@
-import { AppShell, Burger, Group, Title } from '@mantine/core';
+import { AppShell, Burger, Group, NavLink, Title } from '@mantine/core';
 import { useDisclosure } from '@mantine/hooks';
-import { Link, Outlet } from 'react-router-dom';
+import { Link, Outlet, useLocation } from 'react-router-dom';
 import Logo from './dynatrace.svg?react';
 
 export const Layout = () => {
   const [opened, { toggle }] = useDisclosure();
+  const loc = useLocation();
   return  (
     <AppShell
       header={{ height: 64 }}
@@ -29,8 +30,8 @@ export const Layout = () => {
       </AppShell.Header>
 
       <AppShell.Navbar p="md">
-        <Link to={'/'}>Home</Link>
-        <Link to={'/player'}>Player</Link>
+        <NavLink component={Link} label='Home' to={'/'} active={loc.pathname=='/'}/>
+        <NavLink component={Link} label='Player' to={'/player'} active={loc.pathname=='/player'}/>
       </AppShell.Navbar>
 
       <AppShell.Main>
