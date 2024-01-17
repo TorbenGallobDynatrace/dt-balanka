@@ -5,7 +5,6 @@ import './index.css';
 import { MantineProvider } from '@mantine/core';
 import { DynatraceTheme } from './theme.ts';
 
- 
 ReactDOM.createRoot(document.getElementById('root')!).render(
   <React.StrictMode>
     <MantineProvider theme={DynatraceTheme}>

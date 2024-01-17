@@ -1,30 +1,57 @@
+import { AppShell, Burger, Group, Title } from '@mantine/core';
 import '@mantine/core/styles.css';
-import './App.css';
-import { AppShell, Burger, Group, Image, Title } from '@mantine/core';
 import { useDisclosure } from '@mantine/hooks';
-import { supabase } from './supabase';
-import { useEffect, useState } from 'react';
-
-interface Player {
-  nickname: string;
-}
+import { useEffect, useMemo, useState } from 'react';
+import  Logo from '../public/dynatrace.svg?react';
+import './App.css';
+import { Player, Stats, supabase } from './supabase';
+import { Table, TableData } from '@mantine/core';
 
 function App () {
   const [opened, { toggle }] = useDisclosure();
   const [players, setPlayers] = useState<Player[]>([]);
+  const [stats, setStats] = useState<Stats[]>([]);
 
+
+  const tableData: TableData = useMemo(() => {
+    const statPerPlayer = new Map(stats.map(s => [s.tag_id, s]));
+    const body = players.map(p => {
+      const s = statPerPlayer.get(p.tag_id);
+      const played = s?.played || 0;
+      const wins = s?.wins || 0;
+      const defeats = s?.defeats || 0;
+      const avgScored = s?.avg_scored || 0;
+      const avgReceived = s?.avg_received || 0;
+      return [p.nickname, played, wins, defeats, avgScored, avgReceived];
+    });
+    const head = ['Nickname', 'Played', 'Wins', 'Defeats', 'Avg. Scored', 'Avg. Received'];
+    return {head, body};
+  }, [players, stats]);
 
   useEffect(() => {
     const fetchPlayers = async () => {
       const { data, error } = await supabase
         .from('players')
-        .select('*');
+        .select('*').order('created_on', {ascending: false});
       if(error) {
         throw error;
       }
       setPlayers(data);
     };
     void fetchPlayers();  
+  }, []);
+
+  useEffect(() => {
+    const fetchStats = async () => {
+      const { data, error } = await supabase
+        .from('stats')
+        .select('*');
+      if(error) {
+        throw error;
+      }
+      setStats(data);
+    };
+    void fetchStats();  
   }, []);
 
   return (
@@ -38,14 +65,14 @@ function App () {
       padding="md"
     >
       <AppShell.Header>
-        <Burger
-          opened={opened}
-          onClick={toggle}
-          hiddenFrom="sm"
-          size="sm"
-        />
-        <Group justify='flex-start' p={8} gap={16}>
-          <Image src="dynatrace.svg" height={48} />
+        <Group px={16} h={'100%'} justify='flex-start' gap={16}>
+          <Burger
+            opened={opened}
+            onClick={toggle}
+            hiddenFrom="sm"
+            size="sm"
+          />
+          <Logo height={'32px'} width={'32px'} />
           <Title size={18} order={1}>Dynatrace Balanka</Title>
         </Group>
       </AppShell.Header>
@@ -55,8 +82,7 @@ function App () {
       </AppShell.Navbar>
 
       <AppShell.Main>
-        <p>Hello</p>
-        {players.map(p => <p key={p.nickname}>{p.nickname}</p>)}
+        <Table striped highlightOnHover withTableBorder data={tableData} />
       </AppShell.Main>
     </AppShell>
   );
