@@ -2,9 +2,30 @@ import '@mantine/core/styles.css';
 import './App.css';
 import { AppShell, Burger, Group, Image, Title } from '@mantine/core';
 import { useDisclosure } from '@mantine/hooks';
+import { supabase } from './supabase';
+import { useEffect, useState } from 'react';
+
+interface Player {
+  nickname: string;
+}
 
 function App () {
   const [opened, { toggle }] = useDisclosure();
+  const [players, setPlayers] = useState<Player[]>([]);
+
+
+  useEffect(() => {
+    const fetchPlayers = async () => {
+      const { data, error } = await supabase
+        .from('players')
+        .select('*');
+      if(error) {
+        throw error;
+      }
+      setPlayers(data);
+    };
+    void fetchPlayers();  
+  }, []);
 
   return (
     <AppShell
@@ -30,10 +51,13 @@ function App () {
       </AppShell.Header>
 
       <AppShell.Navbar p="md">
-
+        {'Navbar'}
       </AppShell.Navbar>
 
-      <AppShell.Main>Main</AppShell.Main>
+      <AppShell.Main>
+        <p>Hello</p>
+        {players.map(p => <p key={p.nickname}>{p.nickname}</p>)}
+      </AppShell.Main>
     </AppShell>
   );
 }
