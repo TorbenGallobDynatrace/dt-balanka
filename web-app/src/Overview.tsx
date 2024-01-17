@@ -65,7 +65,7 @@ export const Overview = () => {
 
   return <div>
     <Title order={1} mb={12}>Overall results</Title>
-    <Table>
+    <Table striped highlightOnHover withTableBorder>
       <Table.Thead>
         <Table.Tr>
           <Table.Th>Nickname</Table.Th>
