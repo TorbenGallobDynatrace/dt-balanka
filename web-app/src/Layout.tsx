@@ -30,7 +30,7 @@ export const Layout = () => {
       </AppShell.Header>
 
       <AppShell.Navbar p="md">
-        <NavLink component={Link} label='Home' to={'/'} active={loc.pathname=='/'}/>
+        <NavLink component={Link} label='Overall results' to={'/'} active={loc.pathname=='/'}/>
         <NavLink component={Link} label='Player' to={'/player'} active={loc.pathname=='/player'}/>
       </AppShell.Navbar>
 

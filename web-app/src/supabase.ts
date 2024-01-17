@@ -19,3 +19,14 @@ export interface Stats {
   played: number,
   wins: number,
 }
+
+export interface Result {
+  id: string,
+  'score_a': number,
+  'score_b': number,
+  tap1: string,
+  tap2: string,
+  tbp1: string,
+  tbp2: string,
+  'created_at': string;
+}
