@@ -50,3 +50,5 @@ We welcome contributions to the DT Balanka project! If you have ideas for improv
 For support, please open an issue in the repository, and we will assist you as soon as possible.
 
 Thank you for your interest in the DT Balanka project. Let's elevate the table soccer experience together! 🚀
+
+# Test
