@@ -1,34 +1,40 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
+import '@mantine/core/styles.css';
 import './App.css'
+import { AppShell, Burger, Flex, Group, Image, Title } from '@mantine/core';
+import { useDisclosure } from '@mantine/hooks';
 
 function App() {
-  const [count, setCount] = useState(0)
+  const [opened, { toggle }] = useDisclosure();
 
   return (
-    <>
-      <div>
-        <a href="https://vitejs.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.tsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
+    <AppShell
+    header={{ height: 64 }}
+    navbar={{
+      width: 300,
+      breakpoint: 'sm',
+      collapsed: { mobile: !opened },
+    }}
+    padding="md"
+  >
+    <AppShell.Header>
+      <Burger
+        opened={opened}
+        onClick={toggle}
+        hiddenFrom="sm"
+        size="sm"
+      />
+      <Group justify='flex-start' p={8} gap={16}>
+        <Image src="dynatrace.svg"  height={48} />
+        <Title size={18} order={1}>Dynatrace Balanka</Title>
+      </Group>
+    </AppShell.Header>
+
+    <AppShell.Navbar p="md">
+      
+    </AppShell.Navbar>
+
+    <AppShell.Main>Main</AppShell.Main>
+  </AppShell>
   )
 }
 
