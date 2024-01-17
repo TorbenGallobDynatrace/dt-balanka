@@ -1,0 +1,42 @@
+name: build & deploy to dt-balanka.projektvorschau.at
+
+env:
+  VITE_SUPABASE_ANON_KEY: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImFvb2ZzeXRkdnR6YndreGZ3bnVoIiwicm9sZSI6ImFub24iLCJpYXQiOjE3MDU0MDU4NTMsImV4cCI6MjAyMDk4MTg1M30.cksv4Drs1lAjOl67LlSMx7CNc32usUHjeonifcOMWQ0
+  VITE_SUPABASE_URL: https://aoofsytdvtzbwkxfwnuh.supabase.co
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "18.16.1"
+
+      - name: Install Dependencies & Build
+        run: |
+          cd web-app
+          npm install
+          npm run build
+
+      - name: List output files
+        run: find web-app/dist/ -print
+
+      - name: Deploy to FTP
+        uses: SamKirkland/FTP-Deploy-Action@4.1.0
+        with:
+          server: ${{ secrets.FTP_SERVER }}
+          username: ${{ secrets.FTP_USERNAME }}
+          password: ${{ secrets.FTP_PASSWORD }}
+          server-dir: /
+          local-dir: web-app/dist/
+          port: ${{ secrets.FTP_PORT }}
