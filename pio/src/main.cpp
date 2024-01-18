@@ -10,8 +10,8 @@
 #include <MFRC522.h>
 
 
-#define SSID "iPhone von Torben"
-#define PASSWORD "JuliaUndTorben"
+#define SSID "your WiFi SSID"
+#define PASSWORD "Your WiFi Password"
 #define SCREEN_WIDTH 128 // OLED display width, in pixels
 #define SCREEN_HEIGHT 32 // OLED display height, in pixels
 #define OLED_RESET -1
@@ -27,6 +27,8 @@
 #define SS_PIN 5
 #define ANON_PLAYER "Anon"
 #define ANON_PLAYER_TAG_ID "Anon"
+#define API_GET_PLAYERS_URL "https://dt-balanka.projektvorschau.at/players.php"
+#define API_POST_SCORES_URL "http://dt-balanka.projektvorschau.at/results.php"
 
 MFRC522 mfrc522(SS_PIN, RST_PIN);
 
@@ -147,7 +149,7 @@ void loadPlayers()
 
   Serial.println("[HTTP] Begin loading players...");
 
-  http.begin("https://dt-balanka.projektvorschau.at/players.php"); 
+  http.begin(API_GET_PLAYERS_URL); 
 
   int httpCode = http.GET();
 
@@ -515,7 +517,7 @@ void submitResult()
 
   Serial.println("[HTTP] Begin submitting result...");
 
-  http.begin("http://dt-balanka.projektvorschau.at/results.php");
+  http.begin(API_POST_SCORES_URL);
 
   http.addHeader("Content-Type", "application/json");
 
