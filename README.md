@@ -3,6 +3,8 @@
 ## Overview
 Welcome to the DT Balanka repository, a proof of concept project developed by Team Luminux during the Dynatrace Innovation Day in January 2024 in order to take the spirit of playing table soccer at Dynatrace to a new level. Our project combines hardware and software elements to track and display game scores and player statistics for Balanka (table soccer).
 
+![DT Balanka Hardware](./dt-balanka-hardware.jpg?raw=true "DT Balanka Hardware")
+
 ## Project Components
 
 ### Hardware
@@ -16,6 +18,7 @@ Welcome to the DT Balanka repository, a proof of concept project developed by Te
 - **ESP32 Arduino App**: Arduino C++ application for the ESP32 and the sensors using the VSCode PlatformIO plugin.
 - **Supabase Backend**: Our backend infrastructure is built on Supabase, ensuring robust data management and seamless integration with our frontend.
 - **React Frontend**: A user-friendly web application developed using React, showcasing game results and detailed player statistics.
+- **PHP Supabase Proxy**: As we did not know if the used HTTP library on the ESP32 will support HTTPS, we build a simple PHP API proxy (which wouldn't have been needed).
 
 ## Features
 
